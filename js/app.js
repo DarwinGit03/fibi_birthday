@@ -8,6 +8,8 @@ const passwordError = document.querySelector('#password-error');
 const sessionStatus = document.querySelector('#session-status');
 const themeToggle = document.querySelector('#theme-toggle');
 const heartDraw = document.querySelector('#heart-draw');
+const coupleReveal = document.querySelector('#couple-reveal');
+const coupleRevealImage = document.querySelector('#couple-reveal-image');
 const envelopeStage = document.querySelector('#envelope-stage');
 const letterDialog = document.querySelector('#letter-dialog');
 const letterDialogTitle = document.querySelector('#letter-dialog-title');
@@ -24,7 +26,7 @@ const birthdayPhotos = [
   'images/birthday/7.jpg', 'images/birthday/8.jpeg', 'images/birthday/9.jpg',
   'images/birthday/10.jpg', 'images/birthday/11.jpg', 'images/birthday/12.jpeg'
 ];
-const monthsaryPhotos = [
+const couplePhotos = [
   'images/monthsary/1.jpg', 'images/monthsary/2.jpg', 'images/monthsary/3.jpg',
   'images/monthsary/4.jpg', 'images/monthsary/5.jpg', 'images/monthsary/6.jpg',
   'images/monthsary/7.jpg', 'images/monthsary/8.jpg', 'images/monthsary/9.jpg',
@@ -33,9 +35,6 @@ const monthsaryPhotos = [
   'images/monthsary/16.jpg', 'images/monthsary/17.jpg', 'images/monthsary/18.jpg',
   'images/monthsary/19.jpg', 'images/monthsary/20.jpeg', 'images/monthsary/21.jpeg'
 ];
-const monthsarySlideA = document.querySelector('#monthsary-slide-a');
-const monthsarySlideB = document.querySelector('#monthsary-slide-b');
-const monthsarySlideCount = document.querySelector('#monthsary-slide-count');
 const birthdaySlideA = document.querySelector('#birthday-slide-a');
 const birthdaySlideB = document.querySelector('#birthday-slide-b');
 const birthdaySlideCount = document.querySelector('#birthday-slide-count');
@@ -54,9 +53,6 @@ let memoryHideTimer;
 let memoryRemoveTimer;
 let birthdayPhotoLast = '';
 let birthdayCaptionLast = '';
-let monthsarySlideIndex = 0;
-let monthsaryActiveSlide = monthsarySlideA;
-let monthsarySlideshowTimer = null;
 let birthdaySlideIndex = 0;
 let birthdayActiveSlide = birthdaySlideA;
 let birthdaySlideshowTimer = null;
@@ -96,8 +92,10 @@ function lockSession() {
   window.clearTimeout(heartIntroTimer);
   heartDraw.hidden = true;
   heartDraw.classList.remove('is-playing');
+  coupleReveal.hidden = true;
+  coupleReveal.classList.remove('is-visible');
+  coupleRevealImage.removeAttribute('href');
   if (letterDialog.open) letterDialog.close();
-  stopMonthsarySlideshow();
   stopBirthdaySlideshow();
   if (memoryPop) {
     window.clearTimeout(memoryHideTimer);
@@ -194,21 +192,36 @@ passwordForm.addEventListener('submit', (event) => {
   passwordForm.hidden = true;
   envelopeStage.hidden = true;
   envelopeStage.classList.remove('is-revealed');
+  coupleReveal.hidden = true;
+  coupleReveal.classList.remove('is-visible');
   heartDraw.hidden = false;
   heartDraw.classList.remove('is-playing');
   void heartDraw.offsetWidth;
   heartDraw.classList.add('is-playing');
   sessionUnlocked = true;
   resetSessionIdleTimer();
-  const revealDelay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 5000;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const revealDelay = reducedMotion ? 0 : 3000; 
   heartIntroTimer = window.setTimeout(() => {
     if (!sessionUnlocked) return;
     heartDraw.hidden = true;
     heartDraw.classList.remove('is-playing');
-    envelopeStage.hidden = false;
-    envelopeStage.classList.add('is-revealed');
-    sessionStatus.hidden = false;
-    envelopeStage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const photoIndex = Math.floor(Math.random() * couplePhotos.length);
+    coupleRevealImage.setAttribute('href', couplePhotos[photoIndex]);
+    document.querySelector('#couple-photo-title').textContent = `A favorite photo of us, memory ${photoIndex + 1}`;
+    coupleReveal.hidden = false;
+    coupleReveal.classList.remove('is-visible');
+    void coupleReveal.offsetWidth;
+    coupleReveal.classList.add('is-visible');
+    heartIntroTimer = window.setTimeout(() => {
+      if (!sessionUnlocked) return;
+      coupleReveal.hidden = true;
+      coupleReveal.classList.remove('is-visible');
+      envelopeStage.hidden = false;
+      envelopeStage.classList.add('is-revealed');
+      sessionStatus.hidden = false;
+      envelopeStage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, reducedMotion ? 2500 : 2500);
   }, revealDelay);
 });
 
@@ -218,55 +231,6 @@ passwordInput.addEventListener('input', () => {
 
 let openingEnvelope = false;
 let activeEnvelope = null;
-
-function stopMonthsarySlideshow() {
-  window.clearInterval(monthsarySlideshowTimer);
-  monthsarySlideshowTimer = null;
-  [monthsarySlideA, monthsarySlideB].forEach((slide) => {
-    slide.classList.remove('is-active');
-    slide.onload = null;
-    slide.onerror = null;
-    slide.removeAttribute('src');
-  });
-  monthsarySlideIndex = 0;
-  monthsaryActiveSlide = monthsarySlideA;
-  monthsarySlideCount.textContent = `1 / ${monthsaryPhotos.length}`;
-}
-
-function startMonthsarySlideshow() {
-  stopMonthsarySlideshow();
-  const showFirstSlide = () => monthsarySlideA.classList.add('is-active');
-  monthsarySlideA.onload = showFirstSlide;
-  monthsarySlideA.src = monthsaryPhotos[0];
-  if (monthsarySlideA.complete && monthsarySlideA.naturalWidth > 0) showFirstSlide();
-
-  monthsarySlideshowTimer = window.setInterval(() => {
-    const nextIndex = (monthsarySlideIndex + 1) % monthsaryPhotos.length;
-    const previousSlide = monthsaryActiveSlide;
-    const nextSlide = previousSlide === monthsarySlideA ? monthsarySlideB : monthsarySlideA;
-    nextSlide.classList.remove('is-active');
-    nextSlide.onload = () => {
-      nextSlide.classList.add('is-active');
-      nextSlide.alt = `Monthsary memory ${nextIndex + 1}`;
-      nextSlide.setAttribute('aria-hidden', 'false');
-      previousSlide.classList.remove('is-active');
-      previousSlide.setAttribute('aria-hidden', 'true');
-      monthsaryActiveSlide = nextSlide;
-      monthsarySlideIndex = nextIndex;
-      monthsarySlideCount.textContent = `${nextIndex + 1} / ${monthsaryPhotos.length}`;
-      nextSlide.onload = null;
-      nextSlide.onerror = null;
-    };
-    nextSlide.onerror = () => {
-      nextSlide.onload = null;
-      nextSlide.onerror = null;
-      monthsarySlideIndex = nextIndex;
-      monthsarySlideCount.textContent = `${nextIndex + 1} / ${monthsaryPhotos.length}`;
-    };
-    nextSlide.src = monthsaryPhotos[nextIndex];
-    if (nextSlide.complete && nextSlide.naturalWidth > 0) nextSlide.onload();
-  }, 5000);
-}
 
 function stopBirthdaySlideshow() {
   window.clearInterval(birthdaySlideshowTimer);
@@ -279,30 +243,30 @@ function stopBirthdaySlideshow() {
   });
   birthdaySlideIndex = 0;
   birthdayActiveSlide = birthdaySlideA;
-  birthdaySlideCount.textContent = `1 / ${birthdayPhotos.length}`;
+  birthdaySlideCount.textContent = `1 / ${couplePhotos.length}`;
 }
 
 function startBirthdaySlideshow() {
   stopBirthdaySlideshow();
   const showFirstSlide = () => birthdaySlideA.classList.add('is-active');
   birthdaySlideA.onload = showFirstSlide;
-  birthdaySlideA.src = birthdayPhotos[0];
+  birthdaySlideA.src = couplePhotos[0];
   if (birthdaySlideA.complete && birthdaySlideA.naturalWidth > 0) showFirstSlide();
 
   birthdaySlideshowTimer = window.setInterval(() => {
-    const nextIndex = (birthdaySlideIndex + 1) % birthdayPhotos.length;
+    const nextIndex = (birthdaySlideIndex + 1) % couplePhotos.length;
     const previousSlide = birthdayActiveSlide;
     const nextSlide = previousSlide === birthdaySlideA ? birthdaySlideB : birthdaySlideA;
     nextSlide.classList.remove('is-active');
     nextSlide.onload = () => {
       nextSlide.classList.add('is-active');
-      nextSlide.alt = `Birthday memory ${nextIndex + 1}`;
+      nextSlide.alt = `Shared memory ${nextIndex + 1}`;
       nextSlide.setAttribute('aria-hidden', 'false');
       previousSlide.classList.remove('is-active');
       previousSlide.setAttribute('aria-hidden', 'true');
       birthdayActiveSlide = nextSlide;
       birthdaySlideIndex = nextIndex;
-      birthdaySlideCount.textContent = `${nextIndex + 1} / ${birthdayPhotos.length}`;
+      birthdaySlideCount.textContent = `${nextIndex + 1} / ${couplePhotos.length}`;
       nextSlide.onload = null;
       nextSlide.onerror = null;
     };
@@ -310,9 +274,9 @@ function startBirthdaySlideshow() {
       nextSlide.onload = null;
       nextSlide.onerror = null;
       birthdaySlideIndex = nextIndex;
-      birthdaySlideCount.textContent = `${nextIndex + 1} / ${birthdayPhotos.length}`;
+      birthdaySlideCount.textContent = `${nextIndex + 1} / ${couplePhotos.length}`;
     };
-    nextSlide.src = birthdayPhotos[nextIndex];
+    nextSlide.src = couplePhotos[nextIndex];
     if (nextSlide.complete && nextSlide.naturalWidth > 0) nextSlide.onload();
   }, 5000);
 }
@@ -329,16 +293,14 @@ envelopeButtons.forEach((button) => {
     document.querySelectorAll('[data-letter-content]').forEach((content) => {
       content.hidden = content.dataset.letterContent !== letterType;
     });
-    letterDialogTitle.textContent = `${letterType === 'birthday' ? 'Birthday' : 'Monthsary'} letter`;
-    letterDialog.classList.toggle('monthsary-open', letterType === 'monthsary');
+    letterDialogTitle.textContent = 'Birthday letter';
     letterDialog.classList.toggle('birthday-open', letterType === 'birthday');
 
     const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 420;
     window.setTimeout(() => {
       letterDialog.showModal();
       letterDialogClose.focus();
-      if (letterType === 'monthsary') startMonthsarySlideshow();
-      if (letterType === 'birthday') startBirthdaySlideshow();
+      startBirthdaySlideshow();
       openingEnvelope = false;
     }, delay);
   });
@@ -355,9 +317,7 @@ letterDialog.addEventListener('click', (event) => {
 });
 letterDialog.addEventListener('close', () => {
   openingEnvelope = false;
-  stopMonthsarySlideshow();
   stopBirthdaySlideshow();
-  letterDialog.classList.remove('monthsary-open');
   letterDialog.classList.remove('birthday-open');
   if (activeEnvelope) activeEnvelope.classList.remove('open');
   envelopeButtons.forEach((item) => { item.disabled = false; });

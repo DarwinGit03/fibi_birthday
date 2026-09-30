@@ -35,13 +35,13 @@
 
     <section class="scene container" aria-labelledby="page-title">
       <p class="eyebrow">Proverbs 16:3</p>
-      <h1 id="page-title">Made just for you</h1>
+      <h1 id="page-title">Fibi ko</h1>
       <p class="intro">Ginawa ko na digital para mabuksan mo kahit saan, kahit kailan.</p>
 
       <form class="lock-card" id="password-form">
         <label class="lock-label" for="letter-password"></label>
         <div class="password-row">
-          <input id="letter-password" name="password" type="password" placeholder="Enter the password" autocomplete="off" required aria-describedby="password-error">
+          <input id="letter-password" name="password" type="password" placeholder="The key is your smile" autocomplete="off" required aria-describedby="password-error">
           <button class="unlock-button" type="submit">Unlock</button>
         </div>
         <p class="password-error" id="password-error" role="alert" aria-live="polite"></p>
@@ -56,17 +56,26 @@
         <p class="heart-draw-caption">I  L O V E  Y O U!</p>
       </div>
 
+      <div class="couple-reveal" id="couple-reveal" hidden role="status" aria-label="A photo of us">
+        <svg class="couple-reveal-svg" viewBox="0 0 220 205" role="img" aria-labelledby="couple-photo-title">
+          <title id="couple-photo-title">A favorite photo of us</title>
+          <defs>
+            <clipPath id="couple-photo-heart-clip" clipPathUnits="userSpaceOnUse">
+              <path d="M110 184C91 166 28 124 28 77 28 47 49 27 77 27c15 0 26 8 33 22 7-14 18-22 33-22 28 0 49 20 49 50 0 47-63 89-82 107Z" />
+            </clipPath>
+          </defs>
+          <image class="couple-reveal-image" id="couple-reveal-image" x="0" y="0" width="220" height="205" preserveAspectRatio="xMidYMid slice" clip-path="url(#couple-photo-heart-clip)" />
+          <path class="couple-reveal-outline" d="M110 184C91 166 28 124 28 77 28 47 49 27 77 27c15 0 26 8 33 22 7-14 18-22 33-22 28 0 49 20 49 50 0 47-63 89-82 107Z" />
+        </svg>
+        <p class="couple-reveal-caption">My favorite memory is with you.</p>
+      </div>
+
       <div class="envelope-stage" id="envelope-stage" hidden>
         <div class="envelope-grid row row-cols-1 row-cols-md-2 g-4">
           <button class="envelope-button col" type="button" data-letter="birthday" aria-label="Open the birthday letter" aria-haspopup="dialog" aria-controls="letter-dialog">
             <span class="envelope-back" aria-hidden="true"></span><span class="letter-preview" aria-hidden="true"></span>
             <span class="envelope-flap" aria-hidden="true"></span><span class="envelope-front" aria-hidden="true"></span>
             <span class="seal" aria-hidden="true">&#9829;</span><span class="occasion-name">Birthday</span><span class="hint">Tap to open</span>
-          </button>
-          <button class="envelope-button col" type="button" data-letter="monthsary" aria-label="Open the monthsary letter" aria-haspopup="dialog" aria-controls="letter-dialog">
-            <span class="envelope-back" aria-hidden="true"></span><span class="letter-preview" aria-hidden="true"></span>
-            <span class="envelope-flap" aria-hidden="true"></span><span class="envelope-front" aria-hidden="true"></span>
-            <span class="seal" aria-hidden="true">&#9829;</span><span class="occasion-name">Monthsary</span><span class="hint">Tap to open</span>
           </button>
         </div>
       </div>
@@ -79,43 +88,23 @@
         </div>
         <!-- Edit each letter independently below. -->
         <article class="letter-card" data-letter-content="birthday">
-          <div class="letter-top"><span class="letter-label">Birthday letter</span><span class="little-heart" aria-hidden="true">&#9825;</span></div>
+          <div class="letter-top"><span class="letter-label">My favorite person</span><span class="little-heart" aria-hidden="true">&#9825;</span></div>
           <div class="birthday-layout row align-items-center g-4">
-            <div class="birthday-slideshow col-12 col-md-5 order-1" id="birthday-slideshow" aria-label="Birthday photo slideshow">
-              <div class="monthsary-slide-frame">
-                <img class="monthsary-slide is-active" id="birthday-slide-a" alt="Birthday memory 1" aria-hidden="false">
-                <img class="monthsary-slide" id="birthday-slide-b" alt="" aria-hidden="true">
-                <span class="monthsary-slide-heart" aria-hidden="true">&#9829;</span>
+            <div class="birthday-slideshow col-12 col-md-5 order-1" id="birthday-slideshow" aria-label="Slideshow of our memories">
+              <div class="slideshow-frame">
+                <img class="slideshow-image is-active" id="birthday-slide-a" alt="Shared memory 1" aria-hidden="false">
+                <img class="slideshow-image" id="birthday-slide-b" alt="" aria-hidden="true">
+                <span class="slideshow-heart" aria-hidden="true">&#9829;</span>
               </div>
-              <p class="birthday-slide-count" id="birthday-slide-count" aria-live="polite">1 / 12</p>
+              <p class="birthday-slide-count" id="birthday-slide-count" aria-live="polite">1 / 21</p>
             </div>
             <div class="birthday-copy col-12 col-md-7 order-2">
-              <p class="greeting">To my favorite person,</p>
+              <p class="greeting">To my Beautiful Fibi ko,</p>
               <div class="message">
-                <p>Hi fibi ko, mahal, pare ko, honey bee, etc... ewan ko na ren dami natin tawagan. Unang una sa lahat, one year na ren pala simula nung naging official tayo sa ligawan kahit alam ko gustong gusto mo na ako nun...eme Ewan ko ba pero sobrang lakas na loob ko sayo tapos kapag kasama kita... Nakakaya ko kahit hindi, dahil nireremind mo ako palagiii, at kinoCorrect yung mindset ko madalas mali (lagi sinasabi di ko kaya yan). </p>
-                <p>Thank you dahil kinilala mo muna ako bago ako binigyan ng chance, and same ren hinayaan ko ako kilalanin kita ng sobra sobra to the point na kahit di na dapat ishare pero sinabi mo as in wala ka tinago kaya SOBRA KITANG MINAHAL, at syempre lalo pang MAMAHALIN (Dapat mas mahal kita.)</p>
-                <p>Ang hirap gumawa ng ganito pwede ba sa personal na lang kaso baka di ko ren magawa. Haha. Pero sobra akong nagpapasalamat sa Panginoon dahil ibinigay ka nya sa akin. "My Answered Prayer". Basta alam ko magiging tayo talaga kahit binasted mo ako, (Paulit ulit eh nuh) pero sobrang perfect lahat as in (The time sinurrender sa kanya)... Sobra paren ako naAamazed sa Panginoon, kung paano siya nag Work sa kung ano meron sa atin ngaun.</p>
-                <p>Today is your Birthday fibi ko, another year and blessing sa buhay mo. Keep on pursuing God, and Serve the Lord. and iPray makasama kita for life, not just you and me, but in the ministry of the Lord "Bring people back to the Lord, share salvation, and make more disciple". Wag lang tayo mapagod (Kahit ako talaga yun, nag rereklamo haha)</p>
-              </div>
-              <p class="signoff">From sa Taong nagpatibok ng iyong puso<span class="signature">Dadarrr &#9825;</span></p>
-            </div>
-          </div>
-        </article>
-        <article class="letter-card" data-letter-content="monthsary" hidden>
-          <div class="letter-top"><span class="letter-label">Monthsary letter</span><span class="little-heart" aria-hidden="true">&#9825;</span></div>
-          <div class="monthsary-layout row align-items-center g-4">
-            <div class="monthsary-slideshow col-12 col-md-5 order-1" id="monthsary-slideshow" aria-label="Monthsary photo slideshow">
-              <div class="monthsary-slide-frame">
-                <img class="monthsary-slide is-active" id="monthsary-slide-a" alt="Monthsary memory 1" aria-hidden="false">
-                <img class="monthsary-slide" id="monthsary-slide-b" alt="" aria-hidden="true">
-                <span class="monthsary-slide-heart" aria-hidden="true">&#9829;</span>
-              </div>
-              <p class="monthsary-slide-count" id="monthsary-slide-count" aria-live="polite">1 / 21</p>
-            </div>
-            <div class="monthsary-copy col-12 col-md-7 order-2">
-              <p class="greeting">To my favorite person,</p>
-              <div class="message">
-                <p>Hi fibi ko, mahal, pare ko, honey bee, etc... ewan ko na ren dami natin tawagan. Unang una sa lahat, one year na ren pala simula nung naging official tayo sa ligawan kahit alam ko gustong gusto mo na ako nun...eme Ewan ko ba pero sobrang lakas na loob ko sayo tapos kapag kasama kita... Nakakaya ko kahit hindi, dahil nireremind mo ako palagiii, at kinoCorrect yung mindset ko madalas mali (lagi sinasabi di ko kaya yan). </p>
+                <p>Hi fibi ko, mahal, pare ko, honey bee, etc... ewan ko na ren dami natin tawagan. </p>
+                <p>Unang una sa lahat, Magulo ito, baka di mo maintindihan, pero mararamdaman naman ng puro mo... boom Five month na pala tayo, kala ko one year na... Siguro dahil sinusulit ren natin yung bawat araw eme. </p>
+                <p>Gusto ko lang sabihin sayo na "Mahal na Mahal kita" sobra (dapat mas mahal kita haha) thank you dahil lagi mo ako sinusupport sa lahat ng bagay pero syempre sinasaway ren kapag may mga mali ng pag iisip or nagagawa. Every month kahit simple lang yung ginawa natin kumakain lang sa labas, no special gift or mga ginagawa pero Happy naman tayo... Grabe sobrang simple mong tao, and ang dali mo lang ren pasayahin (Pagnakita mo lang ako Happy kana hahaha eme). Sobra sobra kong naAppreaciate lahat ng ginagawa mo sa akin hindi mas ako maShow na tao pero sobrang laki help mo sa akin binibigyan mo ren ako ng PEACE, and sobrang comfort parang pusa kahit humiga ako ng labas tyan basta gets mo na yun.... </p>
+                <p>Today, one year na ren pala simula nung naging official tayo sa ligawan kahit alam ko gustong gusto mo na ako nun...eme Ewan ko ba pero sobrang lakas na loob ko sayo tapos kapag kasama kita... Nakakaya ko kahit hindi, dahil nireremind mo ako palagiii, at kinoCorrect yung mindset ko madalas mali (lagi sinasabi di ko kaya yan). </p>
                 <p>Thank you dahil kinilala mo muna ako bago ako binigyan ng chance, and same ren hinayaan ko ako kilalanin kita ng sobra sobra to the point na kahit di na dapat ishare pero sinabi mo as in wala ka tinago kaya SOBRA KITANG MINAHAL, at syempre lalo pang MAMAHALIN (Dapat mas mahal kita.)</p>
                 <p>Ang hirap gumawa ng ganito pwede ba sa personal na lang kaso baka di ko ren magawa. Haha. Pero sobra akong nagpapasalamat sa Panginoon dahil ibinigay ka nya sa akin. "My Answered Prayer". Basta alam ko magiging tayo talaga kahit binasted mo ako, (Paulit ulit eh nuh) pero sobrang perfect lahat as in (The time sinurrender sa kanya)... Sobra paren ako naAamazed sa Panginoon, kung paano siya nag Work sa kung ano meron sa atin ngaun.</p>
                 <p>Today is your Birthday fibi ko, another year and blessing sa buhay mo. Keep on pursuing God, and Serve the Lord. and iPray makasama kita for life, not just you and me, but in the ministry of the Lord "Bring people back to the Lord, share salvation, and make more disciple". Wag lang tayo mapagod (Kahit ako talaga yun, nag rereklamo haha)</p>
